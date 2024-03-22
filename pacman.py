@@ -11,15 +11,20 @@ writer = Turtle(visible=False) # Objeto Turtle para escribir el puntaje
 aim = vector(5, 0) # Vector que representa la dirección hacia la que se mueve pacman
 pacman = vector(-40, -80) # Vector que representa la posición inicial de pacman
 
-# Lista de listas, cada una con la posición y la dirección de un fantasma
+# Lista de listas, el primer vector representa la posición inicial del fantasma,
+# el segundo vector representa el movimiento del fantasma
+
+# Modificar la velocidad de los fantasmas aumentando los valores de las coordenadas x e y en el 
+#movimiento del fantasma
 ghosts = [
-    [vector(-180, 160), vector(5, 0)],
-    [vector(-180, -160), vector(0, 5)],
-    [vector(100, 160), vector(0, -5)],
-    [vector(100, -160), vector(-5, 0)],
+    [vector(-180, 160), vector(9, 0)],
+    [vector(-180, -160), vector(0, 9)],
+    [vector(100, 160), vector(0, -9)],
+    [vector(100, -160), vector(-9, 0)],
 ]
 # fmt: off
 
+#Se cambió el diseño del tablero
 # El diseño del nivel está representado por los valotes 0 (pared) y 1 (camino)
 # El diseño del nivel se muestra en una cuadrícula de 20x20
 tiles = [
@@ -126,11 +131,12 @@ def move():
         if valid(point + course):
             point.move(course)
         else:
+            #Direcciones posibles a las que un fantasma puede moverse si encuentra un obstáculo.
             options = [
-                vector(5, 0),
-                vector(-5, 0),
-                vector(0, 5),
-                vector(0, -5),
+                vector(9, 0), # Aumentar la velocidad en la coordenada x
+                vector(-9, 0), # Aumentar la velocidad en la coordenada x (en dirección opuesta)
+                vector(0, 9), # Aumentar la velocidad en la coordenada y
+                vector(0, -9), # Aumentar la velocidad en la coordenada y (en dirección opuesta
             ]
             plan = choice(options)
             course.x = plan.x
