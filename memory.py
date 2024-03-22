@@ -77,8 +77,38 @@ def draw():
         color('black')
         write(tiles[mark], font=('Arial', 30, 'normal'))
 
+    penup()
+    goto(-190, 190)
+    color('black')
+    write("Number of taps: " + str(state['tap_count']), font=('Arial', 14, 'normal'))
+
     update()
     ontimer(draw, 100)
+
+
+def tap(x, y):
+    """Update mark and hidden tiles based on tap."""
+    spot = index(x, y)
+    mark = state['mark']
+    state['tap_count'] += 1  
+
+    if mark is None or mark == spot or tiles[mark] != tiles[spot]:
+        state['mark'] = spot
+    else:
+        hide[spot] = False
+        hide[mark] = False
+        state['mark'] = None
+
+    penup()
+    goto(-190, 190)
+    color('black')
+    write("Number of taps: " + str(state['tap_count']), font=('Arial', 14, 'normal'))
+    update()
+
+
+state['tap_count'] = 0 
+
+
 
 
 shuffle(tiles)
