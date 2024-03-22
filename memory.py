@@ -9,17 +9,19 @@ Exercises:
 5. Use letters instead of tiles.
 """
 
+# Se importan las librerías necesarias
 from random import *
 from turtle import *
 
 from freegames import path
 
+# Se cargan las imágenes y se inicializan las variables
 car = path('car.gif')
 tiles = list(range(32)) * 2
 state = {'mark': None}
 hide = [True] * 64
 
-
+# Funcion square para dibujar un cuadrado
 def square(x, y):
     """Draw white square with black outline at (x, y)."""
     up()
@@ -32,17 +34,17 @@ def square(x, y):
         left(90)
     end_fill()
 
-
+# Funciones index y xy para convertir coordenadas a índices y viceversa
 def index(x, y):
     """Convert (x, y) coordinates to tiles index."""
     return int((x + 200) // 50 + ((y + 200) // 50) * 8)
 
-
+# Función xy para convertir índices a coordenadas
 def xy(count):
     """Convert tiles count to (x, y) coordinates."""
     return (count % 8) * 50 - 200, (count // 8) * 50 - 200
 
-
+# Función tap para destapar las fichas
 def tap(x, y):
     """Update mark and hidden tiles based on tap."""
     spot = index(x, y)
@@ -55,7 +57,7 @@ def tap(x, y):
         hide[mark] = False
         state['mark'] = None
 
-
+# Función draw para dibujar la imagen y las fichas
 def draw():
     """Draw image and tiles."""
     clear()
@@ -77,15 +79,17 @@ def draw():
         color('black')
         write(tiles[mark], font=('Arial', 30, 'normal'))
 
+    # Dibujamos el contador de taps
     penup()
     goto(-190, 190)
     color('black')
     write("Number of taps: " + str(state['tap_count']), font=('Arial', 14, 'normal'))
-
+    # Actualizamos la pantalla
     update()
     ontimer(draw, 100)
 
 
+# Se inicializa el contador de taps
 def tap(x, y):
     """Update mark and hidden tiles based on tap."""
     spot = index(x, y)
@@ -119,6 +123,7 @@ state['tap_count'] = 0  # Inicializamos el contador de taps
 
 
 
+# Se inicializa el juego
 
 shuffle(tiles)
 setup(420, 420, 370, 0)
