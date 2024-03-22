@@ -9,5 +9,7 @@ Lo que hice fue primero jalar el codigo del juego tic tac toe de la libreria fre
 
 Al final lo que hice fue utilizar flake8 para revisar mi escritura y si sigue el estandar PEP8, logrando asi un codigo completo y con buen estandar.
 
-Y aqui una imagen del juego ya completado
+Y aqui una imagen del juego ya completado:
+
+
 ![tictactoe](https://github.com/Zathiald/Evidencia_E3/assets/111139805/2db61764-294d-45e2-abee-e11590fcf8f2)
