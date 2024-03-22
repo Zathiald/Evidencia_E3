@@ -1,21 +1,25 @@
-#Pacman, juego clásico de arcade.
+# Pacman, juego clásico de arcade.
 
-from random import choice # Importa la función choice para elegir aleatoriamente 
-from turtle import * # Importa todas las funciones y clases de Turtle Graphics
+from random import choice  # Importar choice para elegir aleatoriamente
+# Importar las funciones y clases de Turtle Graphics
+from turtle import Turtle, clear, up, goto, dot, hideturtle, tracer
+from turtle import update, ontimer, setup, onkey, listen, bgcolor, done
 
-from freegames import floor, vector # Importa las funciones floor y vector del módulo freegames
+from freegames import floor, vector  # Importar floor y vector de freegames
 
-state = {'score': 0} # Estado del juego (puntaje)
-path = Turtle(visible=False) # Objeto Turtle para dibujar el laberinto
-writer = Turtle(visible=False) # Objeto Turtle para escribir el puntaje
-aim = vector(5, 0) # Vector que representa la dirección hacia la que se mueve pacman
-pacman = vector(-40, -80) # Vector que representa la posición inicial de pacman
+state = {'score': 0}  # Estado del juego (puntaje)
+path = Turtle(visible=False)  # Objeto Turtle para dibujar el laberinto
+writer = Turtle(visible=False)  # Objeto Turtle para escribir el puntaje
+aim = vector(5, 0)  # Vector para la dirección en que se mueve pacman
+pacman = vector(-40, -80)  # Representa la posición inicial de pacman
 
-# Lista de listas, el primer vector representa la posición inicial del fantasma,
-# el segundo vector representa el movimiento del fantasma
+""" Lista de listas:
+El primer vector representa la posición inicial del fantasma
+El segundo vector representa el movimiento del fantasma
+"""
 
-# Modificar la velocidad de los fantasmas aumentando los valores de las coordenadas x e y en el 
-#movimiento del fantasma
+#  Modificar la velocidad de los fantasmas aumentando los valores
+#  de las coordenadas x e y en el movimiento del fantasma
 ghosts = [
     [vector(-180, 160), vector(9, 0)],
     [vector(-180, -160), vector(0, 9)],
@@ -24,7 +28,8 @@ ghosts = [
 ]
 # fmt: off
 
-#Se cambió el diseño del tablero
+
+# Se cambió el diseño del tablero
 # El diseño del nivel está representado por los valotes 0 (pared) y 1 (camino)
 # El diseño del nivel se muestra en una cuadrícula de 20x20
 tiles = [
@@ -49,8 +54,8 @@ tiles = [
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 ]
-
 # fmt: on
+
 
 # Función para dibujar un cuadrado en una posición dada
 def square(x, y):
@@ -65,12 +70,14 @@ def square(x, y):
 
     path.end_fill()
 
-# Función para traducir las coordenadas cartesianas del mundo del juego en índices de la lista tiles
+
+# Traduce las coordenadas cartesianas del juego en índices de la lista tiles
 def offset(point):
     x = (floor(point.x, 20) + 200) / 20
     y = (180 - floor(point.y, 20)) / 20
     index = int(x + y * 20)
     return index
+
 
 # Función para comprobar si un punto dado es válido en el diseño del nivel
 def valid(point):
@@ -78,13 +85,12 @@ def valid(point):
 
     if tiles[index] == 0:
         return False
-
     index = offset(point + 19)
 
     if tiles[index] == 0:
         return False
-
     return point.x % 20 == 0 or point.y % 20 == 0
+
 
 # Función para dibujar el mundo del juego
 def world():
@@ -103,6 +109,7 @@ def world():
                 path.up()
                 path.goto(x + 10, y + 10)
                 path.dot(2, 'white')
+
 
 # Función para controlar el movimiento de pacman y los fantasmas
 def move():
@@ -131,12 +138,12 @@ def move():
         if valid(point + course):
             point.move(course)
         else:
-            #Direcciones posibles a las que un fantasma puede moverse si encuentra un obstáculo.
+            # Direcciones para moverse si encuentra obstáculo.
             options = [
-                vector(9, 0), # Aumentar la velocidad en la coordenada x
-                vector(-9, 0), # Aumentar la velocidad en la coordenada x (en dirección opuesta)
-                vector(0, 9), # Aumentar la velocidad en la coordenada y
-                vector(0, -9), # Aumentar la velocidad en la coordenada y (en dirección opuesta
+                vector(9, 0),  # Aumentar la velocidad en la coordenada x
+                vector(-9, 0),  # Aumentar la velocidad en dirección opuesta x
+                vector(0, 9),  # Aumentar la velocidad en la coordenada y
+                vector(0, -9),  # Aumentar la velocidad en dirección opuesta y
             ]
             plan = choice(options)
             course.x = plan.x
@@ -154,11 +161,13 @@ def move():
 
     ontimer(move, 100)
 
+
 # Función para cambiar la dirección de pacman si es válida
 def change(x, y):
     if valid(pacman + vector(x, y)):
         aim.x = x
         aim.y = y
+
 
 # Configuración inicial del juego
 setup(420, 420, 370, 0)
@@ -174,4 +183,4 @@ onkey(lambda: change(0, 5), 'Up')
 onkey(lambda: change(0, -5), 'Down')
 world()
 move()
-done() # Termina el juego después de que el jugador cierre la ventana
+done()  # Termina el juego después de que el jugador cierre la ventana
