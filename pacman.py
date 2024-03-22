@@ -1,24 +1,17 @@
-"""Pacman, classic arcade game.
+#Pacman, juego clásico de arcade.
 
-Exercises
+from random import choice # Importa la función choice para elegir aleatoriamente 
+from turtle import * # Importa todas las funciones y clases de Turtle Graphics
 
-1. Change the board.
-2. Change the number of ghosts.
-3. Change where pacman starts.
-4. Make the ghosts faster/slower.
-5. Make the ghosts smarter.
-"""
+from freegames import floor, vector # Importa las funciones floor y vector del módulo freegames
 
-from random import choice
-from turtle import *
+state = {'score': 0} # Estado del juego (puntaje)
+path = Turtle(visible=False) # Objeto Turtle para dibujar el laberinto
+writer = Turtle(visible=False) # Objeto Turtle para escribir el puntaje
+aim = vector(5, 0) # Vector que representa la dirección hacia la que se mueve pacman
+pacman = vector(-40, -80) # Vector que representa la posición inicial de pacman
 
-from freegames import floor, vector
-
-state = {'score': 0}
-path = Turtle(visible=False)
-writer = Turtle(visible=False)
-aim = vector(5, 0)
-pacman = vector(-40, -80)
+# Lista de listas, cada una con la posición y la dirección de un fantasma
 ghosts = [
     [vector(-180, 160), vector(5, 0)],
     [vector(-180, -160), vector(0, 5)],
@@ -26,6 +19,9 @@ ghosts = [
     [vector(100, -160), vector(-5, 0)],
 ]
 # fmt: off
+
+# El diseño del nivel está representado por los valotes 0 (pared) y 1 (camino)
+# El diseño del nivel se muestra en una cuadrícula de 20x20
 tiles = [
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0,
@@ -50,9 +46,8 @@ tiles = [
 ]
 # fmt: on
 
-
+# Función para dibujar un cuadrado en una posición dada
 def square(x, y):
-    """Draw square using path at (x, y)."""
     path.up()
     path.goto(x, y)
     path.down()
@@ -64,17 +59,15 @@ def square(x, y):
 
     path.end_fill()
 
-
+# Función para traducir las coordenadas cartesianas del mundo del juego en índices de la lista tiles
 def offset(point):
-    """Return offset of point in tiles."""
     x = (floor(point.x, 20) + 200) / 20
     y = (180 - floor(point.y, 20)) / 20
     index = int(x + y * 20)
     return index
 
-
+# Función para comprobar si un punto dado es válido en el diseño del nivel
 def valid(point):
-    """Return True if point is valid in tiles."""
     index = offset(point)
 
     if tiles[index] == 0:
@@ -87,9 +80,8 @@ def valid(point):
 
     return point.x % 20 == 0 or point.y % 20 == 0
 
-
+# Función para dibujar el mundo del juego
 def world():
-    """Draw world using path."""
     bgcolor('black')
     path.color('blue')
 
@@ -106,9 +98,8 @@ def world():
                 path.goto(x + 10, y + 10)
                 path.dot(2, 'white')
 
-
+# Función para controlar el movimiento de pacman y los fantasmas
 def move():
-    """Move pacman and all ghosts."""
     writer.undo()
     writer.write(state['score'])
 
@@ -156,14 +147,13 @@ def move():
 
     ontimer(move, 100)
 
-
+# Función para cambiar la dirección de pacman si es válida
 def change(x, y):
-    """Change pacman aim if valid."""
     if valid(pacman + vector(x, y)):
         aim.x = x
         aim.y = y
 
-
+# Configuración inicial del juego
 setup(420, 420, 370, 0)
 hideturtle()
 tracer(False)
@@ -177,4 +167,4 @@ onkey(lambda: change(0, 5), 'Up')
 onkey(lambda: change(0, -5), 'Down')
 world()
 move()
-done()
+done() # Termina el juego después de que el jugador cierre la ventana
