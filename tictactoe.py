@@ -12,6 +12,8 @@ from turtle import *
 
 from freegames import line
 
+# Inicializa el tablero como una lista de listas
+board = [['' for _ in range(3)] for _ in range(3)]
 
 def grid():
     """Draw tic-tac-toe grid."""
@@ -52,11 +54,18 @@ def tap(x, y):
     """Draw X or O in tapped square."""
     x = floor(x)
     y = floor(y)
-    player = state['player']
-    draw = players[player]
-    draw(x, y)
-    update()
-    state['player'] = not player
+
+    # Convierte las coordenadas a índices de la lista
+    i, j = int((x + 200) // 133), int((y + 200) // 133)
+    
+    # Verifica si la casilla está vacía
+    if board[i][j] == '':
+        player = state['player']
+        draw = players[player]
+        draw(x, y)
+        board[i][j] = 'X' if player == 0 else 'O'
+        update()
+        state['player'] = not player
 
 
 setup(420, 420, 370, 0)
