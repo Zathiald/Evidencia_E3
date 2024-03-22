@@ -29,6 +29,7 @@ Para la realización de la modificación del juego pacman se siguieron los sigui
 
 5. Por úlitmo, se válido bajo el estándar PEP8 realizando los ajustes necesarios flake 8
    
-   ![Screenshot (77)](https://github.com/Zathiald/Evidencia_E3/assets/136507726/8b260b40-e749-459a-aa45-8cb8118fb708)
+   ![Screenshot (77)](https://github.com/Zathiald/Evidencia_E3/assets/136507726/e2925994-d13b-4bb4-8bce-e0f6f005a28a)
+
 
 
