@@ -90,7 +90,7 @@ def tap(x, y):
     """Update mark and hidden tiles based on tap."""
     spot = index(x, y)
     mark = state['mark']
-    state['tap_count'] += 1  
+    state['tap_count'] += 1  # Increment the tap count
 
     if mark is None or mark == spot or tiles[mark] != tiles[spot]:
         state['mark'] = spot
@@ -99,6 +99,15 @@ def tap(x, y):
         hide[mark] = False
         state['mark'] = None
 
+    # Check if all tiles are revealed
+    if all(not hide[i] for i in range(len(hide))):
+        bgcolor('green')  # Change background color to green
+        penup()
+        goto(-50, 0)
+        color('white')
+        write("¡Acabaste!", font=('Arial', 30, 'normal'))
+
+    # Draw the tap count
     penup()
     goto(-190, 190)
     color('black')
@@ -106,7 +115,7 @@ def tap(x, y):
     update()
 
 
-state['tap_count'] = 0 
+state['tap_count'] = 0  # Initialize tap count
 
 
 
