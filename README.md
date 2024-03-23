@@ -1,7 +1,5 @@
 # Evidencia_E3
 Sofía Osorio Suárez - A01277695
-Correo: A01277695@tec.mx
-Primera semanaTEC
 
 Para la realización de la modificación del juego pacman se siguieron los siguientes pasos:
 
@@ -31,5 +29,4 @@ Para la realización de la modificación del juego pacman se siguieron los sigui
    
    ![Screenshot (77)](https://github.com/Zathiald/Evidencia_E3/assets/136507726/e2925994-d13b-4bb4-8bce-e0f6f005a28a)
 
-
-
+Este es el reporte de lo realizado para la evidencia final
